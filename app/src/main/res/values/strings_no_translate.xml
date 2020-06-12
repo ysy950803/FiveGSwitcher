@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fgu_class" translatable="false">bWl1aS50ZWxlcGhvbnkuVGVsZXBob255TWFuYWdlcg==</string>
+    <string name="fgu_method_1" translatable="false">Z2V0RGVmYXVsdA==</string>
+    <string name="fgu_method_2" translatable="false">aXNGaXZlR0NhcGFibGU=</string>
+    <string name="fgu_method_3" translatable="false">c2V0VXNlckZpdmVHRW5hYmxlZA==</string>
+    <string name="fgu_method_4" translatable="false">aXNVc2VyRml2ZUdFbmFibGVk</string>
+</resources>
