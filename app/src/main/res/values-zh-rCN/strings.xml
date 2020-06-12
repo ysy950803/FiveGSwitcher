@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">5G开关</string>
+
+    <string name="five_g_tile_label">5G开关</string>
+    <string name="settings_main_title_not_support">抱歉，本设备不支持5G</string>
+    <string name="settings_enable_5g">开启/关闭5G</string>
+    <string name="settings_enable_5g_summary">快捷开关无响应时，可在此处切换</string>
+    <string name="settings_to_mobile_net_settings">移动网络设置</string>
+    <string name="settings_to_mns_summary">管理双卡与移动网络</string>
+    <string name="settings_edit_label">编辑开关显示名称</string>
+    <string name="settings_edit_label_summary">不超过6个字符哦</string>
+    <string name="settings_about_title">关于</string>
+    <string name="settings_love_support">赞赏支持</string>
+    <string name="settings_love_support_summary">如果喜欢，一切随缘，理想消费，健康生活</string>
+    <string name="settings_dev_home">\@ysy950803，关注我，发现更多</string>
+    <string name="settings_dev_home_summary">开发者主页</string>
+    <string name="notfy_channel_name">临时前台服务</string>
+    <string name="notfy_channel_desc">用于保证快捷开关稳定性</string>
+</resources>

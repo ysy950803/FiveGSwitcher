@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">FiveGSwitcher</string>
+
+    <string name="five_g_tile_label">5G Switcher</string>
+    <string name="settings_main_title_not_support">Sorry, this device does not support 5g</string>
+    <string name="settings_enable_5g">Turn on/off 5G</string>
+    <string name="settings_enable_5g_summary">When the shortcut is not responding, it can be toggled here</string>
+    <string name="settings_to_mobile_net_settings">Mobile Network Settings</string>
+    <string name="settings_to_mns_summary">Manage dual cards and mobile networks</string>
+    <string name="settings_edit_label">Edit switcher label</string>
+    <string name="settings_edit_label_summary">No more than 6 characters</string>
+    <string name="settings_about_title">About</string>
+    <string name="settings_love_support">Support for love</string>
+    <string name="settings_love_support_summary">Everything goes with fate</string>
+    <string name="settings_dev_home">\@ysy950803 Follow me, find more</string>
+    <string name="settings_dev_home_summary">Developer Home</string>
+    <string name="notfy_channel_name">Temporary Foreground Service</string>
+    <string name="notfy_channel_desc">To ensure the stability of the switcher</string>
+</resources>
