@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">5G开关</string>
 
-    <string name="five_g_tile_label">@string/app_name</string>
+    <string name="five_g_tile_label">5G开关</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.ysy.fivegswitcher
 
+import android.content.Context
 import android.graphics.drawable.Icon
 import android.os.Build
 import android.service.quicksettings.Tile
@@ -13,12 +14,12 @@ class SwitcherTileService : TileService() {
     private var mInActiveIcon: Icon? = null
     private var mFiveGSupport: Boolean = false
 
-    override fun onCreate() {
-        super.onCreate()
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
         mActiveIcon = mActiveIcon ?: Icon.createWithResource(this, R.drawable.ic_5g_white_24dp)
         mInActiveIcon = mInActiveIcon ?: Icon.createWithResource(this, R.drawable.ic_5g_white_24dp)
             .setTint(0x80FFFFFF.toInt())
-        mFiveGSupport = FiveGUtils.isFiveGCapable()
+        mFiveGSupport = if (mFiveGSupport) true else FiveGUtils.isFiveGCapable()
     }
 
     override fun onStartListening() {
