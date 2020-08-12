@@ -15,7 +15,7 @@ class SwitcherTileService : TileService() {
     private var mInActiveIcon: Icon? = null
     private var mFiveGSupport = false
 
-    // optimization for battery
+    // Optimization for battery
     private var mKillingSelf = false
     private val mKillSelfRunnable = Runnable {
         if (mKillingSelf) return@Runnable
@@ -82,13 +82,13 @@ class SwitcherTileService : TileService() {
         stopSelf()
     }
 
-    override fun onTileRemoved() {
-        super.onTileRemoved()
-        stopSelf()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
+        /*
+         * After stopSelf(), onDestroy() will be called
+         * so we can kill the process self avoiding the
+         * TileService reloaded by AMS.
+         */
         thread { mKillSelfRunnable.run() }
     }
 }
