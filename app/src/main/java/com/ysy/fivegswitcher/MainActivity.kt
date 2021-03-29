@@ -11,15 +11,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         startMNSettings()
-
-        finish()
-        thread {
-            Thread.sleep(1000)
-            FSApp.killSelf()
-        }
     }
 
     private fun startMNSettings() {
-        startActivity(Intent("android.settings.NETWORK_OPERATOR_SETTINGS"))
+        startActivity(Intent("android.settings.NETWORK_OPERATOR_SETTINGS").apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        })
+        finish()
+    }
+
+    override fun finish() {
+        super.finish()
+        thread {
+            Thread.sleep(2000)
+            FSApp.killSelf()
+        }
     }
 }

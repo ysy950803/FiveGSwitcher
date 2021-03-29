@@ -5,30 +5,42 @@ import android.graphics.drawable.Icon
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
+import android.util.Log
 import androidx.annotation.RequiresApi
+import java.util.concurrent.LinkedBlockingQueue
 import kotlin.concurrent.thread
 
 @RequiresApi(Build.VERSION_CODES.N)
 class SwitcherTileService : TileService() {
+
+    companion object {
+        const val TAG = "SwitcherTileService"
+    }
 
     private var mActiveIcon: Icon? = null
     private var mInActiveIcon: Icon? = null
     private var mFiveGSupport = false
 
     // Optimization for battery
-    private var mKillingSelf = false
-    private val mKillSelfRunnable = Runnable {
-        if (mKillingSelf) return@Runnable
-        synchronized(mKillingSelf) {
-            if (mKillingSelf) return@Runnable
-            mKillingSelf = true
+    private val mRunnableQueue = LinkedBlockingQueue<Runnable>(1)
+
+    private fun tryToKillSelf() {
+        if (mRunnableQueue.size >= 1) return
+        mRunnableQueue.offer(Runnable { FSApp.killSelf() })
+        thread {
             Thread.sleep(5000)
-            FSApp.killSelf()
+            Log.d(TAG, "killSelf done")
+            mRunnableQueue.poll()?.run()
         }
+    }
+
+    private fun cancelKillingSelf() {
+        mRunnableQueue.poll()
     }
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
+        Log.d(TAG, "attachBaseContext")
         mActiveIcon = mActiveIcon ?: Icon.createWithResource(this, R.drawable.ic_5g_white_24dp)
         mInActiveIcon = mInActiveIcon ?: Icon.createWithResource(this, R.drawable.ic_5g_white_24dp)
             .setTint(0x80FFFFFF.toInt())
@@ -37,6 +49,8 @@ class SwitcherTileService : TileService() {
 
     override fun onStartListening() {
         super.onStartListening()
+        Log.d(TAG, "onStartListening")
+        cancelKillingSelf()
         if (mFiveGSupport) {
             updateTile(FiveGUtils.isUserFiveGEnabled())
         } else {
@@ -49,6 +63,8 @@ class SwitcherTileService : TileService() {
 
     override fun onClick() {
         super.onClick()
+        Log.d(TAG, "onClick ${qsTile?.state}")
+        cancelKillingSelf()
         if (!mFiveGSupport) return
         if (isLocked) {
             unlockAndRun { toggle() }
@@ -74,21 +90,25 @@ class SwitcherTileService : TileService() {
 
     override fun onStopListening() {
         super.onStopListening()
-        stopSelf()
-    }
-
-    override fun onLowMemory() {
-        super.onLowMemory()
+        Log.d(TAG, "onStopListening")
         stopSelf()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        /*
-         * After stopSelf(), onDestroy() will be called
-         * so we can kill the process self avoiding the
-         * TileService reloaded by AMS.
-         */
-        thread { mKillSelfRunnable.run() }
+        Log.d(TAG, "onDestroy")
+        tryToKillSelf()
+    }
+
+    override fun onTileAdded() {
+        super.onTileAdded()
+        Log.d(TAG, "onTileAdded")
+        cancelKillingSelf()
+    }
+
+    override fun onTileRemoved() {
+        super.onTileRemoved()
+        Log.d(TAG, "onTileRemoved")
+        tryToKillSelf()
     }
 }
