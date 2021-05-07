@@ -2,7 +2,7 @@ package com.ysy.fivegswitcher
 
 import android.util.Log
 
-object FiveGUtils {
+internal object FiveGUtils {
 
     private const val TAG = "FiveGUtils"
 

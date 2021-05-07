@@ -23,7 +23,7 @@ import java.util.Map;
  *     desc  : utils about reflect
  * </pre>
  */
-public final class ReflectUtils {
+final class ReflectUtils {
 
     private final Class<?> type;
 
