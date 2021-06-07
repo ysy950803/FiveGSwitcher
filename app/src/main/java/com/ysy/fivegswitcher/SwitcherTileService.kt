@@ -14,7 +14,7 @@ import kotlin.concurrent.thread
 class SwitcherTileService : TileService() {
 
     companion object {
-        const val TAG = "SwitcherTileService"
+        private const val TAG = "SwitcherTileService"
     }
 
     private var mActiveIcon: Icon? = null
