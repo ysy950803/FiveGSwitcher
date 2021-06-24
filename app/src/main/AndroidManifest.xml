@@ -13,6 +13,7 @@
 
         <activity
             android:name=".MainActivity"
+            android:excludeFromRecents="true"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +22,7 @@
                     android:host="localhost"
                     android:scheme="${applicationId}" />
             </intent-filter>
+
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
@@ -30,11 +32,14 @@
             android:name=".SwitcherTileService"
             android:icon="@drawable/ic_5g_white_24dp"
             android:label="@string/five_g_tile_label"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
-            android:process=":tile">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
+
+            <meta-data
+                android:name="android.service.quicksettings.TOGGLEABLE_TILE"
+                android:value="true" />
         </service>
 
     </application>

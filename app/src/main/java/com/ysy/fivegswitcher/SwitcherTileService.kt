@@ -2,15 +2,12 @@ package com.ysy.fivegswitcher
 
 import android.content.Context
 import android.graphics.drawable.Icon
-import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.util.Log
-import androidx.annotation.RequiresApi
 import java.util.concurrent.LinkedBlockingQueue
 import kotlin.concurrent.thread
 
-@RequiresApi(Build.VERSION_CODES.N)
 class SwitcherTileService : TileService() {
 
     companion object {
@@ -21,7 +18,6 @@ class SwitcherTileService : TileService() {
     private var mInActiveIcon: Icon? = null
     private var mFiveGSupport = false
 
-    // Optimization for battery
     private val mRunnableQueue = LinkedBlockingQueue<Runnable>(1)
 
     private fun tryToKillSelf() {
@@ -86,18 +82,6 @@ class SwitcherTileService : TileService() {
             state = if (active) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
             updateTile()
         }
-    }
-
-    override fun onStopListening() {
-        super.onStopListening()
-        Log.d(TAG, "onStopListening")
-        stopSelf()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(TAG, "onDestroy")
-        tryToKillSelf()
     }
 
     override fun onTileAdded() {
