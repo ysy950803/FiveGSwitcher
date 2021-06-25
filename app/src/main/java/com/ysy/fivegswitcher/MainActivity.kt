@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     override fun finish() {
         super.finish()
         thread {
-            Thread.sleep(2000)
+            Thread.sleep(1000)
             FSApp.killSelf()
         }
     }

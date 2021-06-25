@@ -1,7 +1,9 @@
 package com.ysy.fivegswitcher
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Icon
+import android.os.IBinder
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.util.Log
@@ -24,7 +26,7 @@ class SwitcherTileService : TileService() {
         if (mRunnableQueue.size >= 1) return
         mRunnableQueue.offer(Runnable { FSApp.killSelf() })
         thread {
-            Thread.sleep(5000)
+            Thread.sleep(2000)
             Log.d(TAG, "killSelf done")
             mRunnableQueue.poll()?.run()
         }
@@ -82,6 +84,27 @@ class SwitcherTileService : TileService() {
             state = if (active) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
             updateTile()
         }
+    }
+
+
+    override fun onStopListening() {
+        super.onStopListening()
+        Log.d(TAG, "onStopListening")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy")
+    }
+
+    override fun onBind(intent: Intent?): IBinder? {
+        Log.d(TAG, "onBind")
+        return super.onBind(intent)
+    }
+
+    override fun onUnbind(intent: Intent?): Boolean {
+        Log.d(TAG, "onUnbind")
+        return super.onUnbind(intent)
     }
 
     override fun onTileAdded() {
