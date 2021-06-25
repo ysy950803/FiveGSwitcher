@@ -18,7 +18,7 @@ class SwitcherTileService : TileService() {
 
     private var mActiveIcon: Icon? = null
     private var mInActiveIcon: Icon? = null
-    private var mFiveGSupport = false
+    private val mFiveGSupport by lazy { FiveGUtils.isFiveGCapable() }
 
     private val mRunnableQueue = LinkedBlockingQueue<Runnable>(1)
 
@@ -42,7 +42,6 @@ class SwitcherTileService : TileService() {
         mActiveIcon = mActiveIcon ?: Icon.createWithResource(this, R.drawable.ic_5g_white_24dp)
         mInActiveIcon = mInActiveIcon ?: Icon.createWithResource(this, R.drawable.ic_5g_white_24dp)
             .setTint(0x80FFFFFF.toInt())
-        mFiveGSupport = if (mFiveGSupport) true else FiveGUtils.isFiveGCapable()
     }
 
     override fun onStartListening() {
