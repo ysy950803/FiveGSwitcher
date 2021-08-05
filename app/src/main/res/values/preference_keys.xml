@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="main_title">main_title</string>
+    <string name="to_mobile_net_settings">to_mobile_net_settings</string>
+    <string name="to_auto_start">to_auto_start</string>
+    <string name="love_support">love_support</string>
+    <string name="developer_home">developer_home</string>
+</resources>

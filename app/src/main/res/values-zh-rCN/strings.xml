@@ -2,4 +2,14 @@
     <string name="app_name">5G开关</string>
 
     <string name="five_g_tile_label">5G开关</string>
+    <string name="settings_main_title_not_support">抱歉，本设备不支持5G</string>
+    <string name="settings_to_mobile_net_settings">移动网络设置</string>
+    <string name="settings_to_mns_summary">管理双卡与移动网络</string>
+    <string name="settings_to_auto_start">开启自启动权限</string>
+    <string name="settings_to_auto_start_summary">若功能不稳定，请尝试授予自启动权限</string>
+    <string name="settings_about_title">关于</string>
+    <string name="settings_love_support">赞赏支持</string>
+    <string name="settings_love_support_summary">如果喜欢，一切随缘，理想消费，健康生活</string>
+    <string name="settings_dev_home">\@ysy950803，关注我，发现更多</string>
+    <string name="settings_dev_home_summary">酷安主页</string>
 </resources>

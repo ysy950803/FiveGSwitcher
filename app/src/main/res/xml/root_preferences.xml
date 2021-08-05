@@ -1,0 +1,40 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:key="@string/main_title"
+        app:title="@string/five_g_tile_label">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="@string/to_mobile_net_settings"
+            app:summary="@string/settings_to_mns_summary"
+            app:title="@string/settings_to_mobile_net_settings" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="@string/to_auto_start"
+            app:summary="@string/settings_to_auto_start_summary"
+            app:title="@string/settings_to_auto_start" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/settings_about_title">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="@string/love_support"
+            app:summary="@string/settings_love_support_summary"
+            app:title="@string/settings_love_support" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="@string/developer_home"
+            app:summary="@string/settings_dev_home_summary"
+            app:title="@string/settings_dev_home" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
