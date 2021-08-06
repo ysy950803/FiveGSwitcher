@@ -27,14 +27,9 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
         return BottomSheetDialog(requireContext(), R.style.DialogTheme)
     }
 
-    override fun onStop() {
-        super.onStop()
-        dismiss()
-    }
-
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        requireActivity().finish()
+        activity?.finish()
     }
 
     fun isDialogShowing(): Boolean = dialog?.isShowing == true
@@ -55,6 +50,14 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
             }
         }
 
+        private fun tryStartActivity(intent: Intent?) {
+            try {
+                super.startActivity(intent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
@@ -66,24 +69,26 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
             }
 
             findPreference<Preference>(SP_KEY_TO_MNS)?.setOnPreferenceClickListener {
-                startActivity(Intent("android.settings.NETWORK_OPERATOR_SETTINGS").apply {
+                tryStartActivity(Intent("android.settings.NETWORK_OPERATOR_SETTINGS").apply {
                     setClassName(
                         "com.android.phone",
                         "com.android.phone.settings.MobileNetworkSettings"
                     )
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 })
+                activity?.finish()
                 true
             }
 
             findPreference<Preference>(SP_KEY_TO_AUTO_START)?.setOnPreferenceClickListener {
-                startActivity(Intent().apply {
+                tryStartActivity(Intent().apply {
                     setClassName(
                         "com.miui.securitycenter",
                         "com.miui.permcenter.autostart.AutoStartManagementActivity"
                     )
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 })
+                activity?.finish()
                 true
             }
 
@@ -101,12 +106,14 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
                         )
                     )
                 } catch (e: Exception) {
-                    startActivity(
+                    tryStartActivity(
                         Intent.parseUri(
                             "https://qr.alipay.com/fkx12362diu95oh2aweaac5",
                             Intent.URI_INTENT_SCHEME
                         )
                     )
+                } finally {
+                    activity?.finish()
                 }
                 true
             }
@@ -120,12 +127,14 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
                         )
                     )
                 } catch (e: Exception) {
-                    startActivity(
+                    tryStartActivity(
                         Intent.parseUri(
                             "https://www.coolapk.com/u/4617184",
                             Intent.URI_INTENT_SCHEME
                         )
                     )
+                } finally {
+                    activity?.finish()
                 }
                 true
             }
