@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -43,6 +44,9 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
             }
             val SP_KEY_TO_AUTO_START by lazy {
                 FSApp.getContext().getString(R.string.to_auto_start)
+            }
+            val SP_KEY_EDIT_LABEL by lazy {
+                FSApp.getContext().getString(R.string.edit_label)
             }
             val SP_KEY_LOVE_SUPPORT by lazy { FSApp.getContext().getString(R.string.love_support) }
             val SP_KEY_DEVELOPER_HOME by lazy {
@@ -90,6 +94,16 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
                 })
                 activity?.finish()
                 true
+            }
+
+            findPreference<EditTextPreference>(SP_KEY_EDIT_LABEL)?.setOnPreferenceChangeListener { _, newValue ->
+                val label = newValue as? String ?: ""
+                if (label.isBlank() || label.length > 6) {
+                    return@setOnPreferenceChangeListener false
+                } else {
+                    FSApp.setLabel(label)
+                    return@setOnPreferenceChangeListener true
+                }
             }
 
             findPreference<Preference>(SP_KEY_LOVE_SUPPORT)?.setOnPreferenceClickListener {

@@ -3,6 +3,7 @@
     <string name="main_title">main_title</string>
     <string name="to_mobile_net_settings">to_mobile_net_settings</string>
     <string name="to_auto_start">to_auto_start</string>
+    <string name="edit_label">edit_label</string>
     <string name="love_support">love_support</string>
     <string name="developer_home">developer_home</string>
 </resources>

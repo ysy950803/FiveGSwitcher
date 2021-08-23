@@ -7,6 +7,8 @@
     <string name="settings_to_mns_summary">Manage dual cards and mobile networks</string>
     <string name="settings_to_auto_start">Turn on auto-start permission</string>
     <string name="settings_to_auto_start_summary">If the switcher is unstable, please try to grant auto-start permission</string>
+    <string name="settings_edit_label">Edit switcher label</string>
+    <string name="settings_edit_label_summary">No more than 6 characters</string>
     <string name="settings_about_title">About</string>
     <string name="settings_love_support">Support for love</string>
     <string name="settings_love_support_summary">Everything goes with fate</string>

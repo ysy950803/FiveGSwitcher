@@ -17,6 +17,13 @@
             app:summary="@string/settings_to_auto_start_summary"
             app:title="@string/settings_to_auto_start" />
 
+        <EditTextPreference
+            app:defaultValue="@string/five_g_tile_label"
+            app:iconSpaceReserved="false"
+            app:key="@string/edit_label"
+            app:summary="@string/settings_edit_label_summary"
+            app:title="@string/settings_edit_label" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

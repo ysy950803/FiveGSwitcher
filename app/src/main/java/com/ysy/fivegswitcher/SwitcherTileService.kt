@@ -79,7 +79,7 @@ class SwitcherTileService : TileService() {
     private fun updateTile(active: Boolean) {
         qsTile?.apply {
             icon = if (active) mActiveIcon else mInActiveIcon
-            label = getString(R.string.five_g_tile_label)
+            label = FSApp.getLabel() ?: getString(R.string.five_g_tile_label)
             state = if (active) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
             updateTile()
         }
