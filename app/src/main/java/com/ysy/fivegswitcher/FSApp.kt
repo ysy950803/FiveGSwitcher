@@ -5,7 +5,6 @@ import android.app.Application
 import android.content.Context
 import android.os.Process
 import androidx.preference.PreferenceManager
-import me.weishu.reflection.Reflection
 import kotlin.system.exitProcess
 
 class FSApp : Application() {
@@ -34,7 +33,6 @@ class FSApp : Application() {
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
         CONTEXT = this
-        Reflection.unseal(base)
         initLabel()
     }
 
