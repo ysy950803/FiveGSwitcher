@@ -1,4 +1,4 @@
-package com.ysy.fivegswitcher
+package com.ysy.switcherfiveg
 
 import android.annotation.SuppressLint
 import android.app.Application

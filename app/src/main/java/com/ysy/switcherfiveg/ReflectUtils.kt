@@ -1,4 +1,4 @@
-package com.ysy.fivegswitcher
+package com.ysy.switcherfiveg
 
 import java.lang.reflect.AccessibleObject
 import java.lang.reflect.Constructor

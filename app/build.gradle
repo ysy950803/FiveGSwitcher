@@ -7,11 +7,11 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.ysy.fivegswitcher"
+        applicationId "com.ysy.switcherfiveg"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 8
-        versionName "1.3.2"
+        versionCode 9
+        versionName "1.4.0-new"
     }
 
     buildTypes {

@@ -1,4 +1,4 @@
-package com.ysy.fivegswitcher
+package com.ysy.switcherfiveg
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        // am start -n com.ysy.fivegswitcher/.MainActivity --ez enable_5g true
+        // am start -n com.ysy.switcherfiveg/.MainActivity --ez enable_5g true
         private const val EXT_KEY_ENABLE_5G = "enable_5g"
     }
 

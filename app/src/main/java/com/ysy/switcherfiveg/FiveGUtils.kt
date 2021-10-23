@@ -1,4 +1,4 @@
-package com.ysy.fivegswitcher
+package com.ysy.switcherfiveg
 
 import android.util.Base64
 import android.util.Log
@@ -43,6 +43,8 @@ internal object FiveGUtils {
             Log.e(TAG, method4, e)
             false
         }
+
+    fun String.convertRuntimeName() = String(Base64.decode(this, Base64.DEFAULT))
 
     private fun Int.convertRuntimeName() =
         String(Base64.decode(FSApp.getContext().getString(this), Base64.DEFAULT))

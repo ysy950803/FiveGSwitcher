@@ -16,7 +16,7 @@
 
 ```shell
 # 开启5G，关闭则为false
-am start -n com.ysy.fivegswitcher/.MainActivity --ez enable_5g true
+am start -n com.ysy.switcherfiveg/.MainActivity --ez enable_5g true
 ```
 
 ### 技术分析

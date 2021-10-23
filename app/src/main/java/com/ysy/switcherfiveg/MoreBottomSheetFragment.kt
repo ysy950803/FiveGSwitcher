@@ -1,9 +1,11 @@
-package com.ysy.fivegswitcher
+package com.ysy.switcherfiveg
 
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.ysy.switcherfiveg.FiveGUtils.convertRuntimeName
 import java.net.URLEncoder
 
 class MoreBottomSheetFragment : BottomSheetDialogFragment() {
@@ -73,10 +76,10 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
             }
 
             findPreference<Preference>(SP_KEY_TO_MNS)?.setOnPreferenceClickListener {
-                tryStartActivity(Intent("android.settings.NETWORK_OPERATOR_SETTINGS").apply {
+                tryStartActivity(Intent("YW5kcm9pZC5zZXR0aW5ncy5ORVRXT1JLX09QRVJBVE9SX1NFVFRJTkdT".convertRuntimeName()).apply {
                     setClassName(
-                        "com.android.phone",
-                        "com.android.phone.settings.MobileNetworkSettings"
+                        "Y29tLmFuZHJvaWQucGhvbmU=".convertRuntimeName(),
+                        "Y29tLmFuZHJvaWQucGhvbmUuc2V0dGluZ3MuTW9iaWxlTmV0d29ya1NldHRpbmdz".convertRuntimeName()
                     )
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 })
@@ -87,8 +90,8 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
             findPreference<Preference>(SP_KEY_TO_AUTO_START)?.setOnPreferenceClickListener {
                 tryStartActivity(Intent().apply {
                     setClassName(
-                        "com.miui.securitycenter",
-                        "com.miui.permcenter.autostart.AutoStartManagementActivity"
+                        "Y29tLm1pdWkuc2VjdXJpdHljZW50ZXI=".convertRuntimeName(),
+                        "Y29tLm1pdWkucGVybWNlbnRlci5hdXRvc3RhcnQuQXV0b1N0YXJ0TWFuYWdlbWVudEFjdGl2aXR5".convertRuntimeName()
                     )
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 })
@@ -110,9 +113,9 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
                 try {
                     startActivity(
                         Intent.parseUri(
-                            "alipays://platformapi/startapp?saId=10000007&qrcode=${
+                            "${"YWxpcGF5czovL3BsYXRmb3JtYXBpL3N0YXJ0YXBwP3NhSWQ9MTAwMDAwMDcmcXJjb2RlPQ==".convertRuntimeName()}${
                                 URLEncoder.encode(
-                                    "https://qr.alipay.com/fkx12362diu95oh2aweaac5",
+                                    "aHR0cHM6Ly9xci5hbGlwYXkuY29tL2ZreDEyMzYyZGl1OTVvaDJhd2VhYWM1".convertRuntimeName(),
                                     "UTF-8"
                                 )
                             }",
@@ -122,7 +125,7 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
                 } catch (e: Exception) {
                     tryStartActivity(
                         Intent.parseUri(
-                            "https://qr.alipay.com/fkx12362diu95oh2aweaac5",
+                            "aHR0cHM6Ly9xci5hbGlwYXkuY29tL2ZreDEyMzYyZGl1OTVvaDJhd2VhYWM1".convertRuntimeName(),
                             Intent.URI_INTENT_SCHEME
                         )
                     )
@@ -136,14 +139,14 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
                 try {
                     startActivity(
                         Intent.parseUri(
-                            "coolmarket://u/4617184",
+                            "Y29vbG1hcmtldDovL3UvNDYxNzE4NA==".convertRuntimeName(),
                             Intent.URI_INTENT_SCHEME
                         )
                     )
                 } catch (e: Exception) {
                     tryStartActivity(
                         Intent.parseUri(
-                            "https://www.coolapk.com/u/4617184",
+                            "aHR0cHM6Ly93d3cuY29vbGFway5jb20vdS80NjE3MTg0".convertRuntimeName(),
                             Intent.URI_INTENT_SCHEME
                         )
                     )
