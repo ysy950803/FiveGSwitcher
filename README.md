@@ -2,7 +2,7 @@
 
 ### 下载
 
-[Download it on Google Play](https://play.google.com/store/apps/details?id=com.ysy.switcherfiveg)
+<a href='https://play.google.com/store/apps/details?id=com.ysy.switcherfiveg&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://raw.githubusercontent.com/ysy950803/FiveGSwitcher/master-3/google-play-badge.png'/></a>
 
 ### 添加快捷开关到MIUI通知中心
 
@@ -14,7 +14,7 @@
 
 ```shell
 # true表示开启5G，关闭则为false
-am start -n com.ysy.switcherfiveg/.MainActivity --ez enable_5g true
+am start -n com.ysy.fivegswitcher/.MainActivity --ez enable_5g true
 ```
 
 ### FAQ

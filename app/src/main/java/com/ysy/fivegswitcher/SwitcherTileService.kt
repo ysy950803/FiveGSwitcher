@@ -8,6 +8,7 @@ import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.blankj.utilcode.util.ToastUtils
 
 class SwitcherTileService : TileService() {
 
@@ -43,7 +44,17 @@ class SwitcherTileService : TileService() {
     override fun onClick() {
         super.onClick()
         Log.v(TAG, "onClick ${qsTile?.state}")
-        if (!m5GSupport) return
+        if (!m5GSupport) {
+            ToastUtils.showLong(R.string.settings_main_title_not_support)
+            return
+        }
+        if (!FSApp.isSettingsInitDone()) {
+            ToastUtils.showLong(R.string.toast_settings_not_init)
+            startActivityAndCollapse(Intent(FSApp.getContext(), MainActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            })
+            return
+        }
         toggle()
     }
 
