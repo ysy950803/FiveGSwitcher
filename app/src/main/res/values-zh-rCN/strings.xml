@@ -1,19 +1,39 @@
 <resources>
-    <string name="app_name">5G开关</string>
+    <string name="app_name">MIUI 5G开关2</string>
 
     <string name="five_g_tile_label">5G开关</string>
     <string name="settings_main_title_not_support">抱歉，本设备不支持5G</string>
     <string name="settings_enable_5g">开启/关闭5G</string>
     <string name="settings_enable_5g_summary">快捷开关无响应时，可在此处切换</string>
+    <string name="settings_select_mode">选择模式</string>
+    <string name="settings_select_mode_summary">根据需要选择不同的运行模式</string>
     <string name="settings_to_mobile_net_settings">移动网络设置</string>
     <string name="settings_to_mns_summary">管理双卡与移动网络</string>
-    <string name="settings_edit_label">编辑开关显示名称</string>
+    <string name="settings_to_network_type_settings">网络类型选择</string>
+    <string name="settings_to_nts_summary">快速切换5G/4G/3G等网络优先</string>
+    <string name="settings_edit_label">编辑快捷开关显示名称</string>
     <string name="settings_edit_label_summary">不超过6个字符哦</string>
     <string name="settings_about_title">关于</string>
     <string name="settings_love_support">赞赏支持</string>
     <string name="settings_love_support_summary">如果喜欢，一切随缘，理想消费，健康生活</string>
     <string name="settings_dev_home">\@ysy950803，关注我，发现更多</string>
-    <string name="settings_dev_home_summary">酷安主页</string>
-    <string name="notfy_channel_name">临时前台服务</string>
-    <string name="notfy_channel_desc">用于保证快捷开关稳定性</string>
+    <string name="settings_dev_home_summary">开发者主页</string>
+
+    <string-array name="entries">
+        <item>自动</item>
+        <item>Shizuku</item>
+        <item>Root</item>
+    </string-array>
+    <string name="toast_settings_not_init">请从桌面图标或长按快捷开关初始化设置</string>
+    <string name="toast_pls_check_perm">切换失败，请检查Shizuku或Root权限授权</string>
+    <string name="toast_not_support_root">本设备未Root，不可选择</string>
+    <string name="dialog_pls_check_root_app">设备已Root，可优先选择Root模式，请在系统设置或Magisk中授予本应用Root权限</string>
+    <string name="dialog_pls_check_shizuku_msg_1">推荐使用Shizuku模式，但其依赖组件未安装，请先下载安装并正确设置</string>
+    <string name="dialog_pls_check_shizuku_msg_2">Shizuku版本过低，请先升级并正确设置</string>
+    <string name="dialog_pls_check_shizuku_msg_3">Shizuku已多次拒绝授权给本应用，请手动允许</string>
+    <string name="dialog_pls_check_shizuku_install">去安装Shizuku</string>
+    <string name="dialog_pls_check_shizuku_upgrade">去升级Shizuku</string>
+    <string name="dialog_pls_check_shizuku_settings">已安装，去设置</string>
+    <string name="dialog_pls_check_shizuku_allow">去允许</string>
+    <string name="dialog_pls_check_shizuku_cancel">知道了</string>
 </resources>
