@@ -11,6 +11,14 @@
             app:summary="@string/settings_enable_5g_summary"
             app:title="@string/settings_enable_5g" />
 
+        <ListPreference
+            app:entries="@array/entries"
+            app:entryValues="@array/entry_values"
+            app:iconSpaceReserved="false"
+            app:key="@string/select_mode"
+            app:summary="@string/settings_select_mode_summary"
+            app:title="@string/settings_select_mode" />
+
         <EditTextPreference
             app:defaultValue="@string/five_g_tile_label"
             app:iconSpaceReserved="false"
@@ -23,6 +31,12 @@
             app:key="@string/to_mobile_net_settings"
             app:summary="@string/settings_to_mns_summary"
             app:title="@string/settings_to_mobile_net_settings" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="@string/to_network_type_settings"
+            app:summary="@string/settings_to_nts_summary"
+            app:title="@string/settings_to_network_type_settings" />
 
     </PreferenceCategory>
 

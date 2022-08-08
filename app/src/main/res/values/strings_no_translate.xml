@@ -5,4 +5,10 @@
     <string name="fgu_method_2" translatable="false">aXNGaXZlR0NhcGFibGU=</string>
     <string name="fgu_method_3" translatable="false">c2V0VXNlckZpdmVHRW5hYmxlZA==</string>
     <string name="fgu_method_4" translatable="false">aXNVc2VyRml2ZUdFbmFibGVk</string>
+
+    <string-array name="entry_values" translatable="false">
+        <item>auto</item>
+        <item>shizuku</item>
+        <item>root</item>
+    </string-array>
 </resources>

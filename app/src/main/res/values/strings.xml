@@ -1,12 +1,16 @@
 <resources>
-    <string name="app_name">FiveGSwitcher</string>
+    <string name="app_name">5G Switcher</string>
 
     <string name="five_g_tile_label">5G Switcher</string>
     <string name="settings_main_title_not_support">Sorry, this device does not support 5g</string>
     <string name="settings_enable_5g">Turn on/off 5G</string>
-    <string name="settings_enable_5g_summary">When the shortcut is not responding, it can be toggled here</string>
+    <string name="settings_enable_5g_summary">When the switcher is not responding, it can be toggled here</string>
+    <string name="settings_select_mode">Select mode</string>
+    <string name="settings_select_mode_summary">Choose the running mode you need</string>
     <string name="settings_to_mobile_net_settings">Mobile Network Settings</string>
     <string name="settings_to_mns_summary">Manage dual cards and mobile networks</string>
+    <string name="settings_to_network_type_settings">Preferred Network Type</string>
+    <string name="settings_to_nts_summary">Select to prefer 5G/LTE/3G etc.</string>
     <string name="settings_edit_label">Edit switcher label</string>
     <string name="settings_edit_label_summary">No more than 6 characters</string>
     <string name="settings_about_title">About</string>
@@ -14,6 +18,22 @@
     <string name="settings_love_support_summary">Everything goes with fate</string>
     <string name="settings_dev_home">\@ysy950803 Follow me, find more</string>
     <string name="settings_dev_home_summary">Developer Home</string>
-    <string name="notfy_channel_name">Temporary Foreground Service</string>
-    <string name="notfy_channel_desc">To ensure the stability of the switcher</string>
+
+    <string-array name="entries">
+        <item>Auto</item>
+        <item>Shizuku</item>
+        <item>Root</item>
+    </string-array>
+    <string name="toast_settings_not_init">Please init settings from launcher icon or long-pressing switcher</string>
+    <string name="toast_pls_check_perm">Failed, please check Shizuku or Root permission</string>
+    <string name="toast_not_support_root">This device isn\'t rooted, you can\'t choose the mode</string>
+    <string name="dialog_pls_check_root_app">You can choose Root mode directly, please grant permission for app in "System Settings" or "Magisk"</string>
+    <string name="dialog_pls_check_shizuku_msg_1">Shizuku mode is recommended, but its component isn\'t enabled. Please install and setup it correctly</string>
+    <string name="dialog_pls_check_shizuku_msg_2">Shizuku version is too low, please upgrade and setup it correctly</string>
+    <string name="dialog_pls_check_shizuku_msg_3">Shizuku had denied the permission for app, please allow it manually</string>
+    <string name="dialog_pls_check_shizuku_install">To install Shizuku</string>
+    <string name="dialog_pls_check_shizuku_upgrade">To upgrade Shizuku</string>
+    <string name="dialog_pls_check_shizuku_settings">Installed, to setup</string>
+    <string name="dialog_pls_check_shizuku_allow">To allow</string>
+    <string name="dialog_pls_check_shizuku_cancel">Got it</string>
 </resources>
