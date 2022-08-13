@@ -2,7 +2,6 @@ package com.ysy.switcherfiveg
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.IBinder
 import androidx.appcompat.app.AlertDialog
@@ -124,10 +123,7 @@ internal object ShizukuUtils {
 
     private fun installOrUpgrade() {
         FSApp.getContext().tryStartActivity(
-            Intent.parseUri(
-                "aHR0cHM6Ly9wbGF5Lmdvb2dsZS5jb20vc3RvcmUvYXBwcy9kZXRhaWxzP2lkPW1vZS5zaGl6dWt1LnByaXZpbGVnZWQuYXBp".convertRuntimeName(),
-                Intent.URI_INTENT_SCHEME
-            )
+            "aHR0cHM6Ly93d3cuY29vbGFway5jb20vYXBrL21vZS5zaGl6dWt1LnByaXZpbGVnZWQuYXBp".convertRuntimeName()
         )
     }
 }

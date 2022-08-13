@@ -8,7 +8,6 @@ import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.blankj.utilcode.util.ToastUtils
 
 class SwitcherTileService : TileService() {
 
@@ -16,7 +15,7 @@ class SwitcherTileService : TileService() {
         private const val TAG = "SwitcherTileService"
     }
 
-    private val m5GSupport by lazy { FiveGUtils.isFiveGCapable() }
+    private val m5GSupport by lazy { FiveGUtils.isFiveGCapable }
     private var mActiveIcon: Icon? = null
     private var mInActiveIcon: Icon? = null
 
@@ -45,11 +44,11 @@ class SwitcherTileService : TileService() {
         super.onClick()
         Log.v(TAG, "onClick ${qsTile?.state}")
         if (!m5GSupport) {
-            ToastUtils.showLong(R.string.settings_main_title_not_support)
+            R.string.settings_main_title_not_support.showToastLong()
             return
         }
-        if (!FSApp.isSettingsInitDone()) {
-            ToastUtils.showLong(R.string.toast_settings_not_init)
+        if (!FSApp.isSettingsInitDone) {
+            R.string.toast_settings_not_init.showToastLong()
             startActivityAndCollapse(Intent(FSApp.getContext(), MainActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             })
@@ -62,10 +61,15 @@ class SwitcherTileService : TileService() {
         val newEnabled = !FiveGUtils.isUserFiveGEnabled()
         FiveGUtils.setUserFiveGEnabled(newEnabled)
         updateTile(newEnabled)
-        LocalBroadcastManager.getInstance(this)
-            .sendBroadcast(Intent(MoreBottomSheetFragment.SettingsFragment.TAG).apply {
-                putExtra(MoreBottomSheetFragment.SettingsFragment.EXTRA_KEY_ENABLE_5G, newEnabled)
-            })
+        if (MoreBottomSheetFragment.SettingsFragment.isShowing) {
+            LocalBroadcastManager.getInstance(this)
+                .sendBroadcast(Intent(MoreBottomSheetFragment.SettingsFragment.TAG).apply {
+                    putExtra(
+                        MoreBottomSheetFragment.SettingsFragment.EXTRA_KEY_ENABLE_5G,
+                        newEnabled
+                    )
+                })
+        }
     }
 
     private fun updateTile(active: Boolean) {
@@ -76,7 +80,6 @@ class SwitcherTileService : TileService() {
             updateTile()
         }
     }
-
 
     override fun onStopListening() {
         super.onStopListening()
