@@ -6,39 +6,35 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.telephony.TelephonyManager
+import android.widget.Toast
 import androidx.core.content.edit
-import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 
 fun Context?.isNotValid() = this !is Activity || this.isFinishing
-
-fun Context?.isCountryCN() =
-    (this?.getSystemService(Context.TELEPHONY_SERVICE) as? TelephonyManager)?.simCountryIso == "cn"
 
 inline fun Activity?.runWithUIContext(block: (Context) -> Unit) {
     this?.takeIf { !it.isNotValid() }?.let { block.invoke(it) }
 }
 
-fun Fragment.tryStartActivity(intent: Intent?, onFailure: (() -> Unit)? = null) {
+fun Context?.tryStartActivity(intent: Intent?, onFailure: (() -> Unit)? = null) {
     runCatching {
-        this.startActivity(intent?.apply {
+        intent?.apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-        })
+        }
+        if (this is Activity) this.startActivity(intent)
+        else if (this is Application) this.startActivity(intent)
     }.onFailure {
         it.printStackTrace()
         onFailure?.invoke()
     }
 }
 
-fun Context.tryStartActivity(intent: Intent?) {
-    runCatching {
-        if (this is Activity) this.startActivity(intent)
-        else if (this is Application) this.startActivity(intent?.apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-        })
-    }.onFailure {
-        it.printStackTrace()
-    }
+fun Context?.tryStartActivity(uri: String, onFailure: (() -> Unit)? = null) {
+    tryStartActivity(Intent.parseUri(uri, Intent.URI_INTENT_SCHEME)) { onFailure?.invoke() }
+}
+
+fun Int.showToastLong() {
+    Toast.makeText(FSApp.getContext(), this, Toast.LENGTH_LONG).show()
 }
 
 class FSApp : Application() {
@@ -59,8 +55,9 @@ class FSApp : Application() {
 
         fun getLabel() = LABEL
 
-        fun isSettingsInitDone() = PreferenceManager.getDefaultSharedPreferences(getContext())
-            .getBoolean(SP_KEY_SETTINGS_INIT_DONE, false)
+        var isSettingsInitDone = false
+            get() = field || PreferenceManager.getDefaultSharedPreferences(getContext())
+                .getBoolean(SP_KEY_SETTINGS_INIT_DONE, false).also { field = it }
 
         fun putSettingsInitDone(initDone: Boolean) {
             PreferenceManager.getDefaultSharedPreferences(getContext()).edit {

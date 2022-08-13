@@ -19,7 +19,6 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.blankj.utilcode.util.ThreadUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ysy.fivegswitcher.FiveGUtils.convertRuntimeName
@@ -69,9 +68,11 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
             val SP_KEY_DEVELOPER_HOME by lazy {
                 FSApp.getContext().getString(R.string.developer_home)
             }
+
+            var isShowing = false
         }
 
-        private val m5GSupport by lazy { FiveGUtils.isFiveGCapable() }
+        private val m5GSupport by lazy { FiveGUtils.isFiveGCapable }
         private var mEnable5GReceiver: BroadcastReceiver? = null
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -135,7 +136,7 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
                                     showRootTipsDialog()
                                 }
                             } else {
-                                ToastUtils.showLong(R.string.toast_not_support_root)
+                                R.string.toast_not_support_root.showToastLong()
                                 return false
                             }
                         }
@@ -152,24 +153,22 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
             }
 
             findPreference<Preference>(SP_KEY_TO_MNS)?.setOnPreferenceClickListener {
-                tryStartActivity(Intent("YW5kcm9pZC5zZXR0aW5ncy5ORVRXT1JLX09QRVJBVE9SX1NFVFRJTkdT".convertRuntimeName()).apply {
+                context.tryStartActivity(Intent("YW5kcm9pZC5zZXR0aW5ncy5ORVRXT1JLX09QRVJBVE9SX1NFVFRJTkdT".convertRuntimeName()).apply {
                     setClassName(
                         "Y29tLmFuZHJvaWQucGhvbmU=".convertRuntimeName(),
                         "Y29tLmFuZHJvaWQucGhvbmUuc2V0dGluZ3MuTW9iaWxlTmV0d29ya1NldHRpbmdz".convertRuntimeName()
                     )
-                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 })
                 activity?.finish()
                 true
             }
 
             findPreference<Preference>(SP_KEY_TO_NTS)?.setOnPreferenceClickListener {
-                tryStartActivity(Intent().apply {
+                context.tryStartActivity(Intent().apply {
                     component = ComponentName(
                         "Y29tLmFuZHJvaWQucGhvbmU=".convertRuntimeName(),
                         "Y29tLmFuZHJvaWQucGhvbmUuc2V0dGluZ3MuUHJlZmVycmVkTmV0d29ya1R5cGVMaXN0UHJlZmVyZW5jZQ==".convertRuntimeName()
                     )
-                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 })
                 activity?.finish()
                 true
@@ -186,60 +185,35 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
             }
 
             findPreference<Preference>(SP_KEY_LOVE_SUPPORT)?.setOnPreferenceClickListener {
-                if (FSApp.getContext().isCountryCN()) {
-                    runCatching {
-                        startActivity(
-                            Intent.parseUri(
-                                "${"YWxpcGF5czovL3BsYXRmb3JtYXBpL3N0YXJ0YXBwP3NhSWQ9MTAwMDAwMDcmcXJjb2RlPQ==".convertRuntimeName()}${
-                                    URLEncoder.encode(
-                                        "aHR0cHM6Ly9xci5hbGlwYXkuY29tL2ZreDEyMzYyZGl1OTVvaDJhd2VhYWM1".convertRuntimeName(),
-                                        "UTF-8"
-                                    )
-                                }",
-                                Intent.URI_INTENT_SCHEME
-                            )
+                context.tryStartActivity(
+                    "${"YWxpcGF5czovL3BsYXRmb3JtYXBpL3N0YXJ0YXBwP3NhSWQ9MTAwMDAwMDcmcXJjb2RlPQ==".convertRuntimeName()}${
+                        URLEncoder.encode(
+                            "aHR0cHM6Ly9xci5hbGlwYXkuY29tL2ZreDEyMzYyZGl1OTVvaDJhd2VhYWM1".convertRuntimeName(),
+                            "UTF-8"
                         )
-                    }.onFailure {
-                        tryStartActivity(
-                            Intent.parseUri(
-                                "aHR0cHM6Ly9xci5hbGlwYXkuY29tL2ZreDEyMzYyZGl1OTVvaDJhd2VhYWM1".convertRuntimeName(),
-                                Intent.URI_INTENT_SCHEME
-                            )
-                        )
-                    }
-                } else {
-                    tryStartActivity(
-                        Intent.parseUri(
-                            "aHR0cHM6Ly9wYXlwYWwubWUveWFvc2hlbmd5dQ==".convertRuntimeName(),
-                            Intent.URI_INTENT_SCHEME
-                        )
-                    )
+                    }"
+                ) {
+                    context.tryStartActivity("aHR0cHM6Ly9xci5hbGlwYXkuY29tL2ZreDEyMzYyZGl1OTVvaDJhd2VhYWM1".convertRuntimeName())
                 }
                 activity?.finish()
                 true
             }
 
             findPreference<Preference>(SP_KEY_DEVELOPER_HOME)?.setOnPreferenceClickListener {
-                tryStartActivity(
-                    Intent.parseUri(
-                        "Y29vbG1hcmtldDovL3UvNDYxNzE4NA==".convertRuntimeName(),
-                        Intent.URI_INTENT_SCHEME
-                    )
-                ) {
-                    Intent.parseUri(
-                        "aHR0cHM6Ly93d3cuY29vbGFway5jb20vdS80NjE3MTg0".convertRuntimeName(),
-                        Intent.URI_INTENT_SCHEME
-                    )
+                context.tryStartActivity("Y29vbG1hcmtldDovL3UvNDYxNzE4NA==".convertRuntimeName()) {
+                    context.tryStartActivity("aHR0cHM6Ly93d3cuY29vbGFway5jb20vdS80NjE3MTg0".convertRuntimeName())
                 }
                 activity?.finish()
                 true
             }
 
             FSApp.putSettingsInitDone(true)
+            isShowing = true
         }
 
         override fun onDestroyView() {
             super.onDestroyView()
+            isShowing = false
             mEnable5GReceiver?.let {
                 LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(it)
             }

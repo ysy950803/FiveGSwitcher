@@ -8,16 +8,26 @@ import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.DeviceUtils
 import com.blankj.utilcode.util.ReflectUtils
 import com.blankj.utilcode.util.ShellUtils
-import com.blankj.utilcode.util.ToastUtils
 
 internal object FiveGUtils {
 
     private const val TAG = "FiveGUtils"
+    private val KEY_FUE = "Zml2ZWdfdXNlcl9lbmFibGU=".convertRuntimeName()
 
     init {
         System.loadLibrary("fivegswitcher")
     }
 
+    val isFiveGCapable by lazy {
+        runCatching {
+            ReflectUtils.reflect(className)
+                .method(method1)
+                .method(method2)
+                .get() as Boolean
+        }.onFailure {
+            Log.e(TAG, method2, it)
+        }.getOrDefault(false)
+    }
     val isDeviceRooted by lazy { DeviceUtils.isDeviceRooted() }
     val modes: Array<String> by lazy { FSApp.getContext().resources.getStringArray(R.array.entry_values) }
 
@@ -28,15 +38,6 @@ internal object FiveGUtils {
     private val method4 by lazy { consts[4].convertRuntimeName() }
     private val className by lazy { consts[0].convertRuntimeName() }
 
-    fun isFiveGCapable() = runCatching {
-        ReflectUtils.reflect(className)
-            .method(method1)
-            .method(method2)
-            .get() as Boolean
-    }.onFailure {
-        Log.e(TAG, method2, it)
-    }.getOrDefault(false)
-
     fun isUserFiveGEnabled() = runCatching {
         ReflectUtils.reflect(className)
             .method(method1)
@@ -44,7 +45,16 @@ internal object FiveGUtils {
             .get() as Boolean
     }.onFailure {
         Log.e(TAG, method4, it)
-    }.getOrDefault(false)
+    }.getOrDefault(
+        runCatching {
+            Settings.Global.getInt(
+                FSApp.getContext().contentResolver,
+                KEY_FUE
+            ) == 1
+        }.onFailure {
+            Log.e(TAG, KEY_FUE, it)
+        }.getOrDefault(false)
+    )
 
     fun check5GEnabledInNormal() = runCatching {
         val test = !isUserFiveGEnabled()
@@ -71,10 +81,10 @@ internal object FiveGUtils {
             }
         }
     }.onSuccess {
-        if (!it) ToastUtils.showLong(R.string.toast_pls_check_perm)
+        if (!it) R.string.toast_pls_check_perm.showToastLong()
     }.onFailure {
         Log.e(TAG, "$method3 $enable", it)
-        ToastUtils.showLong(R.string.toast_pls_check_perm)
+        R.string.toast_pls_check_perm.showToastLong()
     }.getOrDefault(false)
 
     fun isAppRooted() = isDeviceRooted && AppUtils.isAppRoot()
@@ -96,13 +106,13 @@ internal object FiveGUtils {
     private fun set5GEnabledInShizuku(enable: Boolean) = runCatching {
         Settings.Global.putInt(
             FSApp.getContext().contentResolver,
-            "fiveg_user_enable",
+            KEY_FUE,
             if (enable) 1 else 0
         )
     }.getOrDefault(false)
 
     private fun set5GEnabledInRoot(enable: Boolean) = runCatching {
-        execCmdRoot("settings put global fiveg_user_enable ${if (enable) 1 else 0}")
+        execCmdRoot("settings put global $KEY_FUE ${if (enable) 1 else 0}")
     }.getOrDefault(false)
 
     private fun execCmdRoot(cmd: String) = if (isAppRooted()) {
