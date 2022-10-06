@@ -91,7 +91,7 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
                 }
                 isChecked = FiveGUtils.isUserFiveGEnabled()
                 isEnabled = m5GSupport
-                if (!m5GSupport) return
+                if (!m5GSupport) return@apply
                 LocalBroadcastManager.getInstance(requireContext())
                     .registerReceiver(object : BroadcastReceiver() {
                         override fun onReceive(context: Context?, intent: Intent?) {
@@ -104,7 +104,7 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
 
             findPreference<ListPreference>(SP_KEY_SELECT_MODE)?.apply {
                 isEnabled = m5GSupport
-                if (!m5GSupport) return
+                if (!m5GSupport) return@apply
                 if (value.isNullOrEmpty()) setValueIndex(0)
 
                 fun onClickMode(newValue: String): Boolean {
