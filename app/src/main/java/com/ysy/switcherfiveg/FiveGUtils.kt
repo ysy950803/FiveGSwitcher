@@ -8,6 +8,9 @@ import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.DeviceUtils
 import com.blankj.utilcode.util.ReflectUtils
 import com.blankj.utilcode.util.ShellUtils
+import java.lang.Thread.sleep
+import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
 
 internal object FiveGUtils {
 
@@ -37,6 +40,7 @@ internal object FiveGUtils {
     private val method2 by lazy { consts[2].convertRuntimeName() }
     private val method4 by lazy { consts[4].convertRuntimeName() }
     private val className by lazy { consts[0].convertRuntimeName() }
+    private var doubleCheckThread: Thread? = null
 
     fun isUserFiveGEnabled() = runCatching {
         ReflectUtils.reflect(className)
@@ -81,7 +85,16 @@ internal object FiveGUtils {
             }
         }
     }.onSuccess {
-        if (!it) R.string.toast_pls_check_perm.showToastLong()
+        if (it) {
+            doubleCheckThread?.interrupt()
+            doubleCheckThread = thread {
+                // delay & double-check & downgrade to normal func
+                sleep(TimeUnit.SECONDS.toMillis(2))
+                if (enable != isUserFiveGEnabled()) {
+                    set5GEnabledInNormal(enable)
+                }
+            }
+        } else R.string.toast_pls_check_perm.showToastLong()
     }.onFailure {
         Log.e(TAG, "$method3 $enable", it)
         R.string.toast_pls_check_perm.showToastLong()
