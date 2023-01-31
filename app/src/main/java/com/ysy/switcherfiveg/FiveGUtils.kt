@@ -1,7 +1,6 @@
 package com.ysy.switcherfiveg
 
 import android.provider.Settings
-import android.util.Base64
 import android.util.Log
 import androidx.preference.PreferenceManager
 import com.blankj.utilcode.util.AppUtils
@@ -101,8 +100,6 @@ internal object FiveGUtils {
     }.getOrDefault(false)
 
     fun isAppRooted() = isDeviceRooted && AppUtils.isAppRoot()
-
-    fun String.convertRuntimeName() = String(Base64.decode(this, Base64.DEFAULT))
 
     private external fun getConsts(): String
 

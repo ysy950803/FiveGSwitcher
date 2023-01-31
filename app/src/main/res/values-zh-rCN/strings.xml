@@ -7,6 +7,7 @@
     <string name="settings_enable_5g_summary">快捷开关无响应时，可在此处切换</string>
     <string name="settings_select_mode">选择模式</string>
     <string name="settings_select_mode_summary">根据需要选择不同的运行模式</string>
+    <string name="settings_select_mode_summary_new">新版本系统已经不支持</string>
     <string name="settings_to_mobile_net_settings">移动网络设置</string>
     <string name="settings_to_mns_summary">管理双卡与移动网络</string>
     <string name="settings_to_network_type_settings">网络类型选择</string>

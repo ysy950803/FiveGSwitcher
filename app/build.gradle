@@ -9,8 +9,8 @@ android {
         applicationId "com.ysy.switcherfiveg"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 17
-        versionName "2.0.4-new"
+        versionCode 18
+        versionName "2.1.0-new"
 
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a"

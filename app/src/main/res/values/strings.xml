@@ -7,6 +7,7 @@
     <string name="settings_enable_5g_summary">When the switcher is not responding, it can be toggled here</string>
     <string name="settings_select_mode">Select mode</string>
     <string name="settings_select_mode_summary">Choose the running mode you need</string>
+    <string name="settings_select_mode_summary_new">New version system cannot support</string>
     <string name="settings_to_mobile_net_settings">Mobile Network Settings</string>
     <string name="settings_to_mns_summary">Manage dual cards and mobile networks</string>
     <string name="settings_to_network_type_settings">Preferred Network Type</string>
