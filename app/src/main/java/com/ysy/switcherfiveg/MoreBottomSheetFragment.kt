@@ -72,6 +72,7 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
         }
 
         private val m5GSupport by lazy { FiveGUtils.isFiveGCapable }
+        private val m5GEnabledInNormal by lazy { FiveGUtils.check5GEnabledInNormal() }
         private var mEnable5GReceiver: BroadcastReceiver? = null
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -86,11 +87,21 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
 
             findPreference<SwitchPreferenceCompat>(SP_KEY_ENABLE_5G)?.apply {
                 setOnPreferenceChangeListener { _, newValue ->
-                    FiveGUtils.setUserFiveGEnabled(newValue as Boolean)
+                    if (m5GEnabledInNormal) {
+                        FiveGUtils.setUserFiveGEnabled(newValue as Boolean)
+                    } else {
+                        context.tryStartActivity(Intent().apply {
+                            component = ComponentName(
+                                "Y29tLmFuZHJvaWQucGhvbmU=".convertRuntimeName(),
+                                "Y29tLmFuZHJvaWQucGhvbmUuc2V0dGluZ3MuUHJlZmVycmVkTmV0d29ya1R5cGVMaXN0UHJlZmVyZW5jZQ==".convertRuntimeName()
+                            )
+                        })
+                        true
+                    }
                 }
                 isChecked = FiveGUtils.isUserFiveGEnabled()
                 isEnabled = m5GSupport
-                if (!m5GSupport) return@apply
+                if (!isEnabled) return@apply
                 LocalBroadcastManager.getInstance(requireContext())
                     .registerReceiver(object : BroadcastReceiver() {
                         override fun onReceive(context: Context?, intent: Intent?) {
@@ -102,8 +113,11 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
             }
 
             findPreference<ListPreference>(SP_KEY_SELECT_MODE)?.apply {
-                isEnabled = m5GSupport
-                if (!m5GSupport) return@apply
+                isEnabled = m5GSupport && m5GEnabledInNormal
+                if (!isEnabled) {
+                    setSummary(R.string.settings_select_mode_summary_new)
+                    return@apply
+                }
                 if (value.isNullOrEmpty()) setValueIndex(0)
 
                 fun onClickMode(newValue: String): Boolean {
@@ -210,6 +224,12 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
 
             FSApp.putSettingsInitDone(true)
             isShowing = true
+        }
+
+        override fun onStart() {
+            super.onStart()
+            findPreference<SwitchPreferenceCompat>(SP_KEY_ENABLE_5G)?.isChecked =
+                FiveGUtils.isUserFiveGEnabled()
         }
 
         override fun onDestroyView() {

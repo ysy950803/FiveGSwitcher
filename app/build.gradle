@@ -3,14 +3,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "com.ysy.switcherfiveg"
         minSdkVersion 24
-        targetSdkVersion 30
-        versionCode 16
-        versionName "2.0.4-new"
+        targetSdkVersion 31
+        versionCode 17
+        versionName "2.1.0-new"
 
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a"
