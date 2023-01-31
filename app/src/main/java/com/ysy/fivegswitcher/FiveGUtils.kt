@@ -102,8 +102,6 @@ internal object FiveGUtils {
 
     fun isAppRooted() = isDeviceRooted && AppUtils.isAppRoot()
 
-    fun String.convertRuntimeName() = String(Base64.decode(this, Base64.DEFAULT))
-
     private external fun getConsts(): String
 
     private fun getMode() = PreferenceManager.getDefaultSharedPreferences(FSApp.getContext())

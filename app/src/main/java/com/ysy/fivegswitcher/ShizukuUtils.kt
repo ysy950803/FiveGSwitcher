@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.os.IBinder
 import androidx.appcompat.app.AlertDialog
 import com.blankj.utilcode.util.AppUtils
-import com.ysy.fivegswitcher.FiveGUtils.convertRuntimeName
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.SystemServiceHelper

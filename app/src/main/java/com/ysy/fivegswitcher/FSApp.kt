@@ -6,6 +6,7 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.telephony.TelephonyManager
+import android.util.Base64
 import android.widget.Toast
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
@@ -36,6 +37,8 @@ fun Context?.tryStartActivity(uri: String, onFailure: (() -> Unit)? = null) {
 fun Int.showToastLong() {
     Toast.makeText(FSApp.getContext(), this, Toast.LENGTH_LONG).show()
 }
+
+fun String.convertRuntimeName() = String(Base64.decode(this, Base64.DEFAULT))
 
 class FSApp : Application() {
 

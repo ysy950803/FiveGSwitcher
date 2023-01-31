@@ -1,5 +1,6 @@
 package com.ysy.fivegswitcher
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Icon
@@ -16,6 +17,7 @@ class SwitcherTileService : TileService() {
     }
 
     private val m5GSupport by lazy { FiveGUtils.isFiveGCapable }
+    private val m5GEnabledInNormal by lazy { FiveGUtils.check5GEnabledInNormal() }
     private var mActiveIcon: Icon? = null
     private var mInActiveIcon: Icon? = null
 
@@ -58,17 +60,27 @@ class SwitcherTileService : TileService() {
     }
 
     private fun toggle() {
-        val newEnabled = !FiveGUtils.isUserFiveGEnabled()
-        FiveGUtils.setUserFiveGEnabled(newEnabled)
-        updateTile(newEnabled)
-        if (MoreBottomSheetFragment.SettingsFragment.isShowing) {
-            LocalBroadcastManager.getInstance(this)
-                .sendBroadcast(Intent(MoreBottomSheetFragment.SettingsFragment.TAG).apply {
-                    putExtra(
-                        MoreBottomSheetFragment.SettingsFragment.EXTRA_KEY_ENABLE_5G,
-                        newEnabled
-                    )
-                })
+        if (m5GEnabledInNormal) {
+            val newEnabled = !FiveGUtils.isUserFiveGEnabled()
+            FiveGUtils.setUserFiveGEnabled(newEnabled)
+            updateTile(newEnabled)
+            if (MoreBottomSheetFragment.SettingsFragment.isShowing) {
+                LocalBroadcastManager.getInstance(this)
+                    .sendBroadcast(Intent(MoreBottomSheetFragment.SettingsFragment.TAG).apply {
+                        putExtra(
+                            MoreBottomSheetFragment.SettingsFragment.EXTRA_KEY_ENABLE_5G,
+                            newEnabled
+                        )
+                    })
+            }
+        } else {
+            startActivityAndCollapse(Intent().apply {
+                component = ComponentName(
+                    "Y29tLmFuZHJvaWQucGhvbmU=".convertRuntimeName(),
+                    "Y29tLmFuZHJvaWQucGhvbmUuc2V0dGluZ3MuUHJlZmVycmVkTmV0d29ya1R5cGVMaXN0UHJlZmVyZW5jZQ==".convertRuntimeName()
+                )
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            })
         }
     }
 
