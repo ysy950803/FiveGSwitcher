@@ -3,9 +3,11 @@ package com.ysy.switcherfiveg
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.IBinder
 import androidx.appcompat.app.AlertDialog
 import com.blankj.utilcode.util.AppUtils
+import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.SystemServiceHelper
@@ -117,18 +119,44 @@ internal object ShizukuUtils {
     @SuppressLint("PrivateApi")
     private fun grantRequiredPermission() {
         runCatching {
-            val clzName = "YW5kcm9pZC5jb250ZW50LnBtLklQYWNrYWdlTWFuYWdlcg==".convertRuntimeName()
-            Class.forName(clzName).getMethod(
-                "Z3JhbnRSdW50aW1lUGVybWlzc2lvbg==".convertRuntimeName(),
-                String::class.java /* package name */,
-                String::class.java /* permission name */,
-                Int::class.java /* user ID */
-            ).invoke(
-                asInterface(clzName, "cGFja2FnZQ==".convertRuntimeName()),
-                FSApp.getContext().packageName,
-                "YW5kcm9pZC5wZXJtaXNzaW9uLldSSVRFX1NFQ1VSRV9TRVRUSU5HUw==".convertRuntimeName(),
-                0
-            )
+            // android.content.pm.IPackageManager
+            val clzName = "YW5kcm9pZC5jb250ZW50LnBtLklQYWNrYWdlTWFuYWdlcg".convertRuntimeName()
+            runCatching {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    HiddenApiBypass.invoke(
+                        Class.forName(clzName),
+                        asInterface(
+                            clzName,
+                            "cGFja2FnZQ".convertRuntimeName()
+                        ),
+                        "Z3JhbnRSdW50aW1lUGVybWlzc2lvbg".convertRuntimeName(),
+                        FSApp.getContext().packageName,
+                        // android.permission.WRITE_SECURE_SETTINGS
+                        "YW5kcm9pZC5wZXJtaXNzaW9uLldSSVRFX1NFQ1VSRV9TRVRUSU5HUw".convertRuntimeName(),
+                        0
+                    )
+                } else {
+                    throw RuntimeException()
+                }
+            }.getOrElse {
+                Class.forName(clzName).getMethod(
+                    // grantRuntimePermission
+                    "Z3JhbnRSdW50aW1lUGVybWlzc2lvbg".convertRuntimeName(),
+                    String::class.java /* package name */,
+                    String::class.java /* permission name */,
+                    Int::class.java /* user ID */
+                ).invoke(
+                    // package
+                    asInterface(
+                        clzName,
+                        "cGFja2FnZQ".convertRuntimeName()
+                    ),
+                    FSApp.getContext().packageName,
+                    // android.permission.WRITE_SECURE_SETTINGS
+                    "YW5kcm9pZC5wZXJtaXNzaW9uLldSSVRFX1NFQ1VSRV9TRVRUSU5HUw".convertRuntimeName(),
+                    0
+                )
+            }
         }
     }
 
