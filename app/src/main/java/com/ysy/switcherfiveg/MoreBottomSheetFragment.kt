@@ -94,7 +94,7 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
                         context.tryStartActivity(Intent().apply {
                             component = ComponentName(
                                 "Y29tLmFuZHJvaWQucGhvbmU=".convertRuntimeName(),
-                                "Y29tLmFuZHJvaWQucGhvbmUuc2V0dGluZ3MuUHJlZmVycmVkTmV0d29ya1R5cGVMaXN0UHJlZmVyZW5jZQ==".convertRuntimeName()
+                                "Y29tLmFuZHJvaWQucGhvbmUuc2V0dGluZ3MuTWl1aUZpdmVHTmV0d29ya1NldHRpbmc=".convertRuntimeName()
                             )
                         }) {
                             context.tryStartActivity(Intent(Settings.ACTION_DATA_ROAMING_SETTINGS).apply {

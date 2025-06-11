@@ -96,8 +96,8 @@ class SwitcherTileService : TileService() {
                 component = ComponentName(
                     // com.android.phone
                     "Y29tLmFuZHJvaWQucGhvbmU=".convertRuntimeName(),
-                    // com.android.phone.settings.MiuiFiveGNetworkSetting
-                    "Y29tLmFuZHJvaWQucGhvbmUuc2V0dGluZ3MuTWl1aUZpdmVHTmV0d29ya1NldHRpbmc=".convertRuntimeName()
+                    // com.android.phone.settings.PreferredNetworkTypeListPreference
+                    "Y29tLmFuZHJvaWQucGhvbmUuc2V0dGluZ3MuUHJlZmVycmVkTmV0d29ya1R5cGVMaXN0UHJlZmVyZW5jZQ==".convertRuntimeName()
                 )
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             }
@@ -106,8 +106,8 @@ class SwitcherTileService : TileService() {
                     component = ComponentName(
                         // com.android.phone
                         "Y29tLmFuZHJvaWQucGhvbmU=".convertRuntimeName(),
-                        // com.android.phone.settings.PreferredNetworkTypeListPreference
-                        "Y29tLmFuZHJvaWQucGhvbmUuc2V0dGluZ3MuUHJlZmVycmVkTmV0d29ya1R5cGVMaXN0UHJlZmVyZW5jZQ==".convertRuntimeName()
+                        // com.android.phone.settings.MiuiFiveGNetworkSetting
+                        "Y29tLmFuZHJvaWQucGhvbmUuc2V0dGluZ3MuTWl1aUZpdmVHTmV0d29ya1NldHRpbmc=".convertRuntimeName()
                     )
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 }
