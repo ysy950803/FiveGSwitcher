@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Material 3 bottom sheet -->
+    <dimen name="m3_sheet_corner_radius">28dp</dimen>
+
+    <!-- Material 3 preference cards -->
+    <dimen name="m3_pref_item_corner_radius">20dp</dimen>
+    <dimen name="m3_pref_card_margin_horizontal">16dp</dimen>
+    <dimen name="m3_pref_item_gap">6dp</dimen>
+    <dimen name="m3_pref_item_padding_horizontal">20dp</dimen>
+    <dimen name="m3_pref_item_padding_vertical">14dp</dimen>
+    <dimen name="m3_pref_item_min_height">64dp</dimen>
+
+    <!-- Material 3 preference category header -->
+    <dimen name="m3_pref_category_padding_horizontal">28dp</dimen>
+    <dimen name="m3_pref_category_padding_top">10dp</dimen>
+    <dimen name="m3_pref_category_padding_bottom">8dp</dimen>
+
+    <!-- Preference list -->
+    <dimen name="m3_pref_list_padding_vertical">4dp</dimen>
+</resources>

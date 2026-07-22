@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Monochrome (black/white) accent so the M3 controls (switch, dialog buttons,
+    category headers, text cursor) drop the default purple. Light theme = near-black
+    accent on white; the -night variant flips it. Neutral greys keep pressed/container
+    states from reintroducing colour.
+-->
 <resources>
-    <color name="colorPrimary">#FFFFFF</color>
-    <color name="colorPrimaryDark">#9E9E9E</color>
-    <color name="colorAccent">#212121</color>
+    <color name="mono_primary">#1C1B1F</color>
+    <color name="mono_on_primary">#FFFFFF</color>
+    <color name="mono_primary_container">#C7C6CA</color>
+    <color name="mono_on_primary_container">#1C1B1F</color>
 </resources>

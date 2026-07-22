@@ -1,21 +1,49 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:forceDarkAllowed">false</item>
-
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="preferenceTheme">@style/AppTheme.PreferenceTheme</item>
+        <!-- Monochrome accent: no purple on switches/buttons/category headers. -->
+        <item name="colorPrimary">@color/mono_primary</item>
+        <item name="colorOnPrimary">@color/mono_on_primary</item>
+        <item name="colorPrimaryContainer">@color/mono_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/mono_on_primary_container</item>
     </style>
 
-    <style name="DialogTheme" parent="Theme.AppCompat.DayNight.Dialog">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
+    <!-- Material 3 restyle for the settings PreferenceScreen. -->
+    <style name="AppTheme.PreferenceTheme" parent="PreferenceThemeOverlay">
+        <item name="preferenceStyle">@style/M3Preference</item>
+        <item name="preferenceCategoryStyle">@style/M3Preference.Category</item>
+        <item name="switchPreferenceCompatStyle">@style/M3Preference.Switch</item>
+        <item name="dialogPreferenceStyle">@style/M3Preference.Dialog</item>
+        <item name="editTextPreferenceStyle">@style/M3Preference.EditText</item>
+    </style>
+
+    <style name="M3Preference" parent="Preference.Material">
+        <item name="android:layout">@layout/preference_m3</item>
+    </style>
+
+    <style name="M3Preference.Category" parent="Preference.Category.Material">
+        <item name="android:layout">@layout/preference_category_m3</item>
+        <item name="iconSpaceReserved">false</item>
+    </style>
+
+    <style name="M3Preference.Switch" parent="Preference.SwitchPreferenceCompat.Material">
+        <item name="android:layout">@layout/preference_m3</item>
+        <item name="android:widgetLayout">@layout/preference_widget_switch_m3</item>
+    </style>
+
+    <style name="M3Preference.Dialog" parent="Preference.DialogPreference.Material">
+        <item name="android:layout">@layout/preference_m3</item>
+    </style>
+
+    <style name="M3Preference.EditText" parent="Preference.DialogPreference.EditTextPreference.Material">
+        <item name="android:layout">@layout/preference_m3</item>
+        <item name="android:dialogLayout">@layout/preference_dialog_edittext_m3</item>
     </style>
 </resources>

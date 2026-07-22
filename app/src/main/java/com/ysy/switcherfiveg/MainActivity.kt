@@ -1,8 +1,11 @@
 package com.ysy.switcherfiveg
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,6 +17,11 @@ class MainActivity : AppCompatActivity() {
     private val mFragment by lazy { MoreBottomSheetFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            // fix: fucking google bug
+            WindowCompat.setDecorFitsSystemWindows(window, false)
+        }
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         handleIntent(intent)
     }

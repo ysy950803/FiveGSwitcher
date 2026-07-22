@@ -12,20 +12,25 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.updatePadding
+import androidx.fragment.app.DialogFragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.preference.DialogPreference
 import androidx.preference.EditTextPreference
+import androidx.preference.EditTextPreferenceDialogFragmentCompat
 import androidx.preference.ListPreference
+import androidx.preference.ListPreferenceDialogFragmentCompat
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.blankj.utilcode.util.ThreadUtils
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.net.URLEncoder
 import java.util.concurrent.TimeUnit
 
-class MoreBottomSheetFragment : BottomSheetDialogFragment() {
+class MoreBottomSheetFragment : BaseBottomDialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,10 +38,6 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_more_bottom_sheet, container, false)
-    }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return BottomSheetDialog(requireContext(), R.style.DialogTheme)
     }
 
     override fun onDismiss(dialog: DialogInterface) {
@@ -51,6 +52,9 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
         companion object {
             const val TAG = "SettingsFragment"
             const val EXTRA_KEY_ENABLE_5G = "enable_5g"
+
+            // Same tag androidx.preference uses, so only one dialog shows at a time.
+            private const val DIALOG_FRAGMENT_TAG = "androidx.preference.PreferenceFragment.DIALOG"
 
             val SP_KEY_MAIN_TITLE by lazy { FSApp.getContext().getString(R.string.main_title) }
             val SP_KEY_ENABLE_5G by lazy { FSApp.getContext().getString(R.string.enable_5g) }
@@ -120,9 +124,10 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
             findPreference<ListPreference>(SP_KEY_SELECT_MODE)?.apply {
                 isEnabled = m5GSupport && m5GEnabledInNormal
                 if (!isEnabled) {
-                    setSummary(R.string.settings_select_mode_summary_new)
+                    isVisible = false
                     return@apply
                 }
+                isVisible = true
                 if (value.isNullOrEmpty()) setValueIndex(0)
 
                 fun onClickMode(newValue: String): Boolean {
@@ -239,6 +244,39 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
             isShowing = true
         }
 
+        // Show ListPreference / EditTextPreference dialogs with a Material 3 alert
+        // dialog (rounded corners, tonal surface, M3 buttons) instead of the legacy
+        // AppCompat one. Falls back to the default for any other DialogPreference.
+        override fun onDisplayPreferenceDialog(preference: Preference) {
+            if (parentFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) return
+            val dialog: DialogFragment = when (preference) {
+                is EditTextPreference -> M3EditTextPreferenceDialog()
+                is ListPreference -> M3ListPreferenceDialog()
+                else -> {
+                    super.onDisplayPreferenceDialog(preference)
+                    return
+                }
+            }
+            dialog.arguments = Bundle(1).apply { putString("key", preference.key) }
+            @Suppress("DEPRECATION")
+            dialog.setTargetFragment(this, 0)
+            dialog.show(parentFragmentManager, DIALOG_FRAGMENT_TAG)
+        }
+
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            // Material 3 grouped-card look: drop the default row dividers and
+            // give the list a little vertical breathing room.
+            setDivider(null)
+            setDividerHeight(0)
+            val padV = resources.getDimensionPixelSize(R.dimen.m3_pref_list_padding_vertical)
+            listView.apply {
+                clipToPadding = false
+                updatePadding(top = padV, bottom = padV)
+                isVerticalScrollBarEnabled = false
+            }
+        }
+
         override fun onStart() {
             super.onStart()
             findPreference<SwitchPreferenceCompat>(SP_KEY_ENABLE_5G)?.isChecked =
@@ -263,5 +301,61 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
                 .setCancelable(false)
                 .show()
         }
+    }
+}
+
+/**
+ * Material 3 variant of the EditTextPreference dialog. Building the alert with
+ * [MaterialAlertDialogBuilder] gives it the M3 look (rounded corners, tonal surface,
+ * M3 buttons); the type-specific work — inflating/binding the text field and persisting
+ * on positive — still runs through the framework hooks, so behavior is unchanged.
+ *
+ * NOTE: [onCreateDialogView]/[onBindDialogView]/[onPrepareDialogBuilder] are `protected`,
+ * so this logic has to live inside the subclass rather than a shared helper.
+ */
+class M3EditTextPreferenceDialog : EditTextPreferenceDialogFragmentCompat() {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val pref = preference as DialogPreference
+        val builder = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(pref.dialogTitle)
+            .setIcon(pref.dialogIcon)
+            .setPositiveButton(pref.positiveButtonText, this)
+            .setNegativeButton(pref.negativeButtonText, this)
+        val contentView = onCreateDialogView(requireContext())
+        if (contentView != null) {
+            onBindDialogView(contentView)
+            builder.setView(contentView)
+        } else {
+            builder.setMessage(pref.dialogMessage)
+        }
+        onPrepareDialogBuilder(builder)
+        return builder.create().also { dialog ->
+            if (needInputMethod()) {
+                dialog.window?.setSoftInputMode(
+                    WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE
+                )
+            }
+        }
+    }
+}
+
+/** Material 3 variant of the ListPreference (single-choice) dialog. */
+class M3ListPreferenceDialog : ListPreferenceDialogFragmentCompat() {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val pref = preference as DialogPreference
+        val builder = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(pref.dialogTitle)
+            .setIcon(pref.dialogIcon)
+            .setPositiveButton(pref.positiveButtonText, this)
+            .setNegativeButton(pref.negativeButtonText, this)
+        val contentView = onCreateDialogView(requireContext())
+        if (contentView != null) {
+            onBindDialogView(contentView)
+            builder.setView(contentView)
+        } else {
+            builder.setMessage(pref.dialogMessage)
+        }
+        onPrepareDialogBuilder(builder)
+        return builder.create()
     }
 }

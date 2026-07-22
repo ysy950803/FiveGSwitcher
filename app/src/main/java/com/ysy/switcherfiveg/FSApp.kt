@@ -7,9 +7,14 @@ import android.content.Context
 import android.content.Intent
 import android.telephony.TelephonyManager
 import android.util.Base64
+import android.view.View
 import android.widget.Toast
 import androidx.core.content.edit
+import androidx.core.graphics.Insets
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.preference.PreferenceManager
+import com.blankj.utilcode.util.ScreenUtils
 
 fun Context?.isNotValid() = this !is Activity || this.isFinishing
 
@@ -42,6 +47,25 @@ fun Int.showToastLong() {
 }
 
 fun String.convertRuntimeName() = String(Base64.decode(this, Base64.DEFAULT))
+
+fun getScreenHeight(inApp: Boolean = true) =
+    if (inApp) FSApp.getContext().resources.displayMetrics.heightPixels
+    else ScreenUtils.getScreenHeight()
+
+inline fun View?.applySystemBarsInsets(
+    crossinline onApply: (v: View, insets: Insets) -> Unit = { _, _ -> }
+) {
+    this ?: return
+    ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
+        val systemBarSpacing = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+        runCatching { onApply(v, systemBarSpacing) }
+        insets
+    }
+}
+
+fun View.postRunCatching(onFail: ((t: Throwable) -> Unit)? = null, block: () -> Unit) {
+    this.post { runCatching { block() }.onFailure { onFail?.invoke(it) } }
+}
 
 class FSApp : Application() {
 

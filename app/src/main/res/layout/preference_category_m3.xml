@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Material 3 preference category header: primary-colored section label. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/m3_pref_category_padding_horizontal"
+    android:paddingEnd="@dimen/m3_pref_category_padding_horizontal"
+    android:paddingTop="@dimen/m3_pref_category_padding_top"
+    android:paddingBottom="@dimen/m3_pref_category_padding_bottom">
+
+    <TextView
+        android:id="@android:id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceTitleSmall"
+        android:textColor="?attr/colorPrimary"
+        android:textStyle="bold" />
+
+</LinearLayout>

@@ -7,3 +7,6 @@
 /captures
 .externalNativeBuild
 .cxx
+/app/release
+# Google Play 开发者验证的本地凭证（仅本地打包用，勿提交）
+app/src/main/assets/adi-registration.properties

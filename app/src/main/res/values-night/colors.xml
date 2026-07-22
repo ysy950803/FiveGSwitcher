@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dark-theme monochrome accent: near-white on dark. -->
+<resources>
+    <color name="mono_primary">#E6E1E5</color>
+    <color name="mono_on_primary">#1C1B1F</color>
+    <color name="mono_primary_container">#444746</color>
+    <color name="mono_on_primary_container">#E6E1E5</color>
+</resources>
